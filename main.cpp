@@ -2255,55 +2255,24 @@ class user
 			string uname;
 			if(error==0)
 			{
-				while(!fin1.eof())
+				if(fin1)
 				{
-					fin1>>line;
-					if(email==line)
+					while(!fin1.eof())
 					{
 						fin1>>line;
-						uname=line;
-						fin1>>line;
-						fin1>>line;
-						if(pass==line)
-						{
-							cout<<"\nWelcome back "<<uname;
-							cout<<"\n\n";
-							system("pause");
-							log=1;
-							admin_page(uname);
-						}
-						else
-						{
-							cout<<"\nWrong credentials";
-							cout<<"\n\n";
-							system("pause");
-							log=1;
-							login();
-						}
-					}
-					else
-					{
-						log=0;
-					}
-				}
-				if(log==0)
-				{
-					while(!fin2.eof())
-					{
-						fin2>>line;
 						if(email==line)
 						{
-							fin2>>line;
+							fin1>>line;
 							uname=line;
-							fin2>>line;
-							fin2>>line;
+							fin1>>line;
+							fin1>>line;
 							if(pass==line)
 							{
 								cout<<"\nWelcome back "<<uname;
 								cout<<"\n\n";
 								system("pause");
 								log=1;
-								user_page(uname);
+								admin_page(uname);
 							}
 							else
 							{
@@ -2318,6 +2287,43 @@ class user
 						{
 							log=0;
 						}
+					}	
+				}
+				if(log==0)
+				{
+					if(fin2)
+					{
+						while(!fin2.eof())
+						{
+							fin2>>line;
+							if(email==line)
+							{
+								fin2>>line;
+								uname=line;
+								fin2>>line;
+								fin2>>line;
+								if(pass==line)
+								{
+									cout<<"\nWelcome back "<<uname;
+									cout<<"\n\n";
+									system("pause");
+									log=1;
+									user_page(uname);
+								}
+								else
+								{
+									cout<<"\nWrong credentials";
+									cout<<"\n\n";
+									system("pause");
+									log=1;
+									login();
+								}
+							}
+							else
+							{
+								log=0;
+							}
+						}	
 					}
 				}
 				if(log==0)
