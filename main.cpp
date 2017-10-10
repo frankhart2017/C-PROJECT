@@ -481,7 +481,7 @@ void flight(string uname)
 				rename("flight1.txt","flight.txt");
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -651,7 +651,7 @@ void hotel(string uname)
 				rename("hotel1.txt","hotel.txt");
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -782,7 +782,7 @@ void hotel(string uname)
 				rename("hotel1.txt","hotel.txt");
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -949,7 +949,7 @@ void train(string uname)
 				int st1=rename("train1.txt","train.txt");
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -1126,7 +1126,7 @@ void bus(string uname)
 				rename("bus1.txt","bus.txt");
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -1260,7 +1260,7 @@ void bus(string uname)
 				rename("bus1.txt","bus.txt");
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -1390,7 +1390,7 @@ void holiday(string uname)
 				}
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -1479,7 +1479,7 @@ void holiday(string uname)
 				}
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -1567,7 +1567,7 @@ void holiday(string uname)
 				}
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -1655,7 +1655,7 @@ void holiday(string uname)
 				}
 				cout<<"\nSuccessfully Booked.\n\n";
 				system("pause");
-				main_page();
+				user_page(uname);
 			}
 			exit(0);
             break;
@@ -1728,11 +1728,13 @@ ofstream excel("myticket.csv",ios::out);
 ofstream excel1("holiday.csv",ios::out);
 void writeCSV(string s1, string s2, string s3, string s4, string s5, string s6)
 {
-	excel<<s1<<","<<s2<<","<<s3<<","<<s4<<","<<s5<<","<<s6<<endl;
+	if(excel)
+		excel<<s1<<","<<s2<<","<<s3<<","<<s4<<","<<s5<<","<<s6<<endl;
 }
 void writeCSVHol(string s1, string s2, string s3, string s4, string s5, string s6,string s7)
 {
-	excel1<<s1<<","<<s2<<","<<s3<<","<<s4<<","<<s5<<","<<s6<<","<<s7<<endl;
+	if(excel1)
+		excel1<<s1<<","<<s2<<","<<s3<<","<<s4<<","<<s5<<","<<s6<<","<<s7<<endl;
 }
 void user_page(string fname)
 {
@@ -1755,16 +1757,18 @@ void user_page(string fname)
         		system("cls");
 	        	writeCSV("Type", "Email", "Company", "Source", "Destination", "Price");
 	        	writeCSVHol("Type", "Email", "Company", "Source", "Days", "Nights", "Price");
-	        	string line,company,source,destination,price,type,days,nights;
+	        	string line,company,source,destination,price,type,days,nights,email;
 	        	int i=0;
+	        	if(fin)
+	        	{
 	        	while(!fin.eof())
 	        	{
 	        		fin>>type;
 	        		if(type=="1" || type=="3" || type=="4")
 	        		{
 	        			fin>>line;
-	        			fin>>line;
-	        			if(line==Email)
+	        			fin>>email;
+	        			if(email==Email)
 	        			{
 	        				fin>>company;
 	        				fin>>source;
@@ -1784,13 +1788,14 @@ void user_page(string fname)
 							type="Train";
 						else if(type=="4")
 							type="Bus";
-						writeCSV(type,Email,company,source,destination,price);
+						if(email==Email)
+							writeCSV(type,Email,company,source,destination,price);
 					}
 					else if(type=="2")
 					{
 						fin>>line;
-						fin>>line;
-						if(line==Email)
+						fin>>email;
+						if(email==Email)
 						{
 							fin>>company;
 							fin>>destination;
@@ -1803,13 +1808,14 @@ void user_page(string fname)
 							fin>>line;
 						}
 						type="Hotel";
-						writeCSV(type,Email,company,"Nil",destination,price);
+						if(email==Email)
+							writeCSV(type,Email,company,"Nil",destination,price);
 					}
 					else if(type=="5")
 					{
 						fin>>line;
-						fin>>line;
-						if(line==Email)
+						fin>>email;
+						if(email==Email)
 						{
 							fin>>source;
 							fin>>company;
@@ -1826,8 +1832,10 @@ void user_page(string fname)
 							fin>>line;
 						}
 						type="Holiday";
-						writeCSVHol(type,Email,company,source,days,nights,price);
+						if(email==Email)
+							writeCSVHol(type,Email,company,source,days,nights,price);
 					}
+				}
 				}
 				cout<<"Successfully generated file. Open myticket and holiday file!\n\n";
 				system("pause");
@@ -1870,7 +1878,9 @@ void enter(int ch)
 		{
 			cout<<"\nIncorrect type. The types are dom- Domestic and int- International.\n\n";
 			system("pause");
+			system("cls");
 			enter(ch);
+			return;
 		}
 	}
 	else if(ch==2)
@@ -1886,7 +1896,9 @@ void enter(int ch)
 		{
 			cout<<"\nIncorrect type. The types are se-Semi Sleeper and sl-Sleeper\n\n";
 			system("pause");
+			system("cls");
 			enter(ch);
+			return;
 		}
 	}
 	else if(ch==3)
@@ -1902,7 +1914,9 @@ void enter(int ch)
 		{
 			cout<<"\nIncorrect type. The types are e-Express\n\n";
 			system("pause");
+			system("cls");
 			enter(ch);
+			return;
 		}
 	}
 	cout<<"\nSource: ";
@@ -2001,7 +2015,9 @@ void enter_hol()
 	{
 		cout<<"\nIncorrect type. The types are int-International, des-Destination Wedding, ind-India, pil-Pilgrimage.\n\n";
 		system("pause");
+		system("cls");
 		enter_hol();
+		return;
 	}
 	cout<<"\nName of package: ";
 	cin>>name;
@@ -2050,7 +2066,9 @@ void enter_hot()
 	{
 		cout<<"\nIncorrect type. The types are d-Delux and e-Executive.\n\n";
 		system("pause");
+		system("cls");
 		enter_hot();
+		return;
 	}
 	cout<<"\nName of hotel: ";
 	cin>>name;
@@ -2140,6 +2158,8 @@ void admin_page(string fname)
 		        string line,company,source,destination,price,type,days,nights;
 		    	int i=0;
 		    	ifstream fin("ticket.txt",ios::in);
+		    	if(fin)
+		    	{
 		    	while(!fin.eof())
 		    	{
 		    		fin>>type;
@@ -2181,6 +2201,7 @@ void admin_page(string fname)
 						type="Holiday";
 						writeCSVHol(type,"Nil",company,source,days,nights,price);
 					}
+				}
 				}
 				system("cls");
 				cout<<"Successfully generated file. Open myticket and holiday file!\n\n";
@@ -2348,7 +2369,7 @@ void write(user nuser)
 	else
 	{
 		ofstream fout2("users.txt",ios::out|ios::app);
-		fout2<<nuser.mobile<<"\n"<<nuser.email<<"\n";
+		fout2<<endl<<nuser.mobile<<"\n"<<nuser.email<<"\n";
 		fout2<<nuser.fname<<"\n"<<nuser.lname;
 		fout2<<"\n"<<nuser.pass<<"\n"<<nuser.pkey;
 	}

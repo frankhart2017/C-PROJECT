@@ -1,0 +1,14 @@
+1001
+ind
+Shimla
+Coldshimla
+3
+4
+10000
+1002
+int
+Japan
+Enjoyjapan
+5
+6
+40000

@@ -1,0 +1,14 @@
+1001
+int
+Qatarairways
+Chennai
+Qatar
+98
+45000
+1002
+dom
+Indigo
+Chennai
+Kolkata
+38
+4500
